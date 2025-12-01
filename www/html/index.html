@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unified Calm Science Explorer</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Three.js for 3D animation (Homepage) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    </style>
 </head>
 <body class="animated-bg p-4 md:p-8">
 
@@ -154,7 +159,7 @@
                         </div>
                         
                         <p class="text-xs text-gray-500">Sodium (1 valence electron) gives its electron to Chlorine (7 valence electrons), creating strong attraction.</p>
-                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: Na + Cl ====== NaCl</p>
+                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: Na + Cl ===== NaCl</p>
                     </div>
                     
                     <!-- Fixed Quiz 1 -->
@@ -179,7 +184,7 @@
                     <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 pl-4 mb-4">
                         <li><span class="concept-term">Nonmetals</span> (like Hydrogen, Oxygen, Carbon) have high valence electron counts (typically 4-7).</li>
                         <li><span class="concept-term">Sharing:</span> Instead of giving or taking, they overlap their valence shells and share electrons, counting those shared electrons toward both atoms' octets.</li>
-                        <li><span class="concept-term">Stability:</span> Examples: Water (H20) involves Oxygen sharing electrons with two Hydrogen atoms.</li>
+                        <li><span class="concept-term">Stability:</span> Examples: Water ($\text{H}_2\text{O}$) involves Oxygen sharing electrons with two Hydrogen atoms.</li>
                     </ul>
                     
                     <!-- Diagram -->
@@ -217,7 +222,7 @@
                         </div>
 
                         <p class="text-xs text-gray-500">Oxygen (6 valence electrons) shares electrons with two Hydrogens (1 valence electron each) to achieve stability.</p>
-                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: 2H + O ======= H2O</p>
+                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: 2H + O ======= H20</p>
                     </div>
 
                     <!-- Fixed Quiz 2 -->
@@ -273,3 +278,91 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Molecular Assembly Area -->
+            <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Assembly Area</h3>
+                
+                <div id="current-molecule-container" class="rounded-xl mb-4">
+                    <div id="current-molecule" class="min-h-[100px] flex items-center justify-center gap-4">
+                        <p class="text-gray-400">Drag or click atoms here to start a new molecule.</p>
+                    </div>
+                </div>
+
+                <p id="valency-status" class="text-center text-sm font-medium text-gray-600 mb-4">Total Valency: 0 (Must be even and balanced)</p>
+                <p id="result-text" class="text-center h-8"></p>
+
+                <div class="text-center mt-4">
+                    <button onclick="window.resetMolecule()" class="px-6 py-2 bg-red-400 text-white font-bold rounded-lg shadow-md hover:bg-red-500 transition duration-300">
+                        Reset Molecule
+                    </button>
+                </div>
+            </div>
+
+            <!-- Discovered Garden -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Your Molecular Garden (Saved)</h3>
+                <div id="molecule-garden-ui" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <p class="text-gray-500 italic">Loading discoveries...</p>
+                </div>
+                <p class="text-xs text-gray-400 mt-4">Your garden is saved and accessible across devices.</p>
+            </div>
+        </section>
+        
+        <!-- --- VIEW: FORCES & MOTION --- -->
+        <section id="view-forces" class="view hidden" style="background-color: var(--color-bg-lab);">
+            <header class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-700">🔬 Forces & Motion: Puzzle Lab</h2>
+                <p class="text-gray-500 mt-1">Drag the **red handle** to change the ramp's angle (Max 23.2°). The gray block will slide from the top.</p>
+            </header>
+
+            <!-- Simulation Controls -->
+            <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Ramp Angle: <span id="angle-value">0.0</span>°</h3>
+                
+                <div class="text-center">
+                    <button onclick="window.runSimulation()" class="control-button px-8 py-3 bg-[var(--color-primary-soft)] text-white font-bold rounded-lg shadow-md hover:bg-emerald-600 transition duration-300">
+                        ▶️ OBSERVE MOTION
+                    </button>
+                </div>
+            </div>
+
+            <!-- Simulation Canvas (SVG) -->
+            <div id="simulator-container" class="text-center">
+                <svg id="simulator-canvas" viewBox="0 0 800 450" preserveAspectRatio="xMidYMid meet">
+                    <!-- Base Line -->
+                    <line x1="50" y1="400" x2="750" y2="400" stroke="#333" stroke-width="2" />
+                    
+                    <!-- The Inclined Plane (Ramp) -->
+                    <polygon id="ramp" points="50,400 750,200 750,400" fill="#CCD6D4" stroke="var(--color-primary-soft)" stroke-width="3" />
+                    
+                    <!-- The Moving Object (Block) -->
+                    <rect id="moving-block" x="50" y="370" width="30" height="30" rx="4" class="object-block" transform="translate(0, 0) rotate(0, 65, 385)" />
+                    
+                    <!-- Draggable Handle (Apex - Left side) -->
+                    <circle id="ramp-handle" cx="50" cy="400" r="15" fill="#EF4444" stroke="#D9A891" stroke-width="3" style="cursor: grab;" 
+                            onmousedown="window.handleRampDragStart(event)" ontouchstart="window.handleRampDragStart(event)" />
+
+                    <!-- Text Feedback -->
+                    <text id="forces-result-text" x="400" y="50" text-anchor="middle" font-size="24" fill="#333" font-weight="bold" opacity="0"></text>
+                </svg>
+            </div>
+
+            <!-- Instructions/Challenge -->
+            <div class="mt-8 p-6 bg-white rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">The Challenge</h3>
+                <p class="text-gray-600 mb-2">Adjust the angle and observe how speed and time are affected by the force of gravity.</p>
+            </div>
+        </section>
+        
+    </div>
+
+    <!-- Modal Placeholder -->
+    <div id="modal-container" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+        <div id="message-box" class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full text-center">
+            <p id="modal-message" class="text-gray-700 font-medium mb-4">Message content.</p>
+            <button onclick="window.hideModal()" class="px-6 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition">Close</button>
+        </div>
+    </div>
+</body>
+</html>
