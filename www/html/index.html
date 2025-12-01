@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Calm Science Explorer</title>
+</head>
+<body class="animated-bg p-4 md:p-8">
+
+    <!-- Accessibility Toggle (Floating Orb) -->
+    <div id="accessibility-toggle" class="fixed bottom-4 right-4 z-50">
+        <button onclick="window.toggleAccessibility()" class="p-3 bg-white text-gray-700 shadow-xl rounded-full focus:outline-none ring-4 ring-white hover:bg-gray-100 transition duration-300">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.526.321 1.037.47 1.57.47.604 0 1.189-.148 1.71-.47z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        </button>
+        <div id="accessibility-menu" class="hidden absolute bottom-14 right-0 w-48 bg-white p-4 rounded-lg shadow-xl ring-1 ring-gray-200">
+            <label class="flex items-center space-x-2 text-sm text-gray-700">
+                <input type="checkbox" id="highContrast" class="rounded text-indigo-500" onchange="window.applyAccessibility()">
+                <span>High Contrast</span>
+            </label>
+            <label class="flex items-center space-x-2 mt-2 text-sm text-gray-700">
+                <input type="checkbox" id="dyslexicFont" class="rounded text-indigo-500" onchange="window.applyAccessibility()">
+                <span>Dyslexia Font</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <div class="max-w-4xl mx-auto bg-white/90 backdrop-blur-sm p-6 md:p-10 rounded-xl shadow-2xl">
+        
+        <!-- Navigation Header (Always Visible) -->
+        <nav class="mb-8 border-b pb-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-800">
+                <button onclick="window.setView('home')" class="text-indigo-600 hover:text-indigo-800 transition">
+                    Science Explorer
+                </button>
+            </h1>
+            <div id="user-status" class="text-sm text-gray-400">
+                Auth Status: Connecting...
+            </div>
+        </nav>
+
+        <!-- --- VIEW: HOMEPAGE (Visible by default) --- -->
+        <section id="view-home" class="view">
+            <header class="text-center mb-12">
+                <!-- Three.js 3D Animation Container -->
+                <div id="three-container"></div>
+
+                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">Learn Without Overload.</h2>
+            </header>
+
+            <!-- Benefits Section -->
+            <section class="mb-12 grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+                <div class="p-4 bg-white rounded-lg shadow-md border-t-4 border-emerald-400">
+                    <p class="font-bold text-lg text-emerald-600">Muted Colors</p>
+                    <p class="text-sm text-gray-500">Sensory-friendly design.</p>
+                </div>
+                <div class="p-4 bg-white rounded-lg shadow-md border-t-4 border-indigo-400">
+                    <p class="font-bold text-lg text-indigo-600">No Timers</p>
+                    <p class="text-sm text-gray-500">Low-pressure environment.</p>
+                </div>
+                <div class="p-4 bg-white rounded-lg shadow-md border-t-4 border-pink-400">
+                    <p class="font-bold text-lg text-pink-600">Deep Learning</p>
+                    <p class="text-sm text-gray-500">Puzzle-based understanding.</p>
+                </div>
+            </section>
+
+            <!-- Featured Sections -->
+            <section class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 border-b pb-2 text-gray-700">Explore & Learn</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Card 1: Concepts Library (PRIORITIZED) -->
+                    <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
+                        <h4 class="text-xl font-semibold mb-2 text-gray-800">Concepts Library</h4>
+                        <span class="inline-block px-3 py-1 text-xs font-medium text-orange-600 bg-orange-100 rounded-full mb-3">Basic Science</span>
+                        <p class="text-gray-600 mb-4 text-sm">Read foundational science explanations and take fixed quizzes.</p>
+                        <button onclick="window.setView('learn')" class="calm-btn w-full py-3 bg-orange-500 text-white font-bold rounded-lg shadow-md hover:bg-orange-600 transition duration-300 ease-in-out">
+                            Explore Concepts
+                        </button>
+                    </div>
+                    
+                    <!-- Card 2: Molecule Garden (Accessible via Concepts) -->
+                    <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
+                        <h4 class="text-xl font-semibold mb-2 text-gray-800">Molecule Garden</h4>
+                        <span class="inline-block px-3 py-1 text-xs font-medium text-purple-600 bg-purple-100 rounded-full mb-3">Chemistry Game</span>
+                        <p class="text-gray-600 mb-4 text-sm">Grow molecules by combining atoms peacefully.</p>
+                        <button id="btn-molecule-home" onclick="window.setView('molecule')" class="calm-btn w-full py-3 bg-[var(--color-primary-soft)] text-white font-bold rounded-lg shadow-md transition duration-300 ease-in-out">
+                            Start Calm Lab
+                        </button>
+                    </div>
+
+                    <!-- Card 3: Forces & Motion -->
+                    <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-[1.02]">
+                        <h4 class="text-xl font-semibold mb-2 text-gray-800">Forces & Motion</h4>
+                        <span class="inline-block px-3 py-1 text-xs font-medium text-blue-600 bg-blue-100 rounded-full mb-3">Physics Game</span>
+                        <p class="text-gray-600 mb-4 text-sm">Experiment with gravity and incline using visual observation.</p>
+                        <button onclick="window.setView('forces')" class="calm-btn w-full py-3 bg-[var(--color-primary-soft)] text-white font-bold rounded-lg shadow-md hover:bg-emerald-600 transition duration-300 ease-in-out">
+                            Start Calm Lab
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- --- VIEW: LEARNING CONCEPTS --- (PRIORITIZED) -->
+        <section id="view-learn" class="view hidden" style="background-color: var(--color-bg-lab);">
+            <header class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-700">📚 Fundamental Concepts Library</h2>
+                <p class="text-gray-500 mt-1">Concise, non-overwhelming explanations of key science ideas.</p>
+            </header>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Concept 1: Ionic Bonding -->
+                <div id="concept-ionic" class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-semibold mb-3 text-purple-600">1. Ionic Bonding: The Electron Transfer</h3>
+                    <p class="text-gray-700 mb-4 text-sm">
+                        Ionic bonding happens when atoms transfer valence electrons to achieve a stable, full outer shell. 
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 pl-4 mb-4">
+                        <li><span class="concept-term">Metals</span> have low valence electron counts (typically 1, 2, or 3). They prefer to lose these electrons to become positively charged ions.</li>
+                        <li><span class="concept-term">Nonmetals</span> have high valence electron counts (typically 5, 6, or 7). They prefer to gain electrons to become negatively charged ions.</li>
+                        <li><span class="concept-term">Stability:</span> When an atom with 1-3 electrons combines with an atom with 5-7 electrons, the transfer of electrons makes both atoms stable.</li>
+                    </ul>
+                    
+                    <!-- Diagram -->
+                    <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 mt-4 text-center">
+                        <p class="font-bold text-sm text-gray-700 mb-2">Example: Sodium Chloride (Na + Cl)</p>
+                        
+                        <!-- CUSTOM CSS DIAGRAM: IONIC BONDING (Na + Cl) -->
+                        <div class="diagram-container">
+                            <!-- Sodium (Na) Atom -->
+                            <div class="atom bg-blue-100 text-blue-700 border border-blue-300">Na
+                                <div class="electron" style="top: 10px; right: 10px;"></div>
+                            </div>
+                            
+                            <span class="mx-3 text-2xl text-gray-600">+</span>
+                            
+                            <!-- Chlorine (Cl) Atom -->
+                            <div class="atom bg-green-100 text-green-700 border border-green-300">Cl
+                                <!-- 7 valence electrons -->
+                                <div class="electron" style="top: 5px; left: 50%; transform: translateX(-50%);"></div>
+                                <div class="electron" style="top: 15px; right: 5px;"></div>
+                                <div class="electron" style="top: 30px; right: 5px;"></div>
+                                <div class="electron" style="bottom: 15px; right: 5px;"></div>
+                                <div class="electron" style="bottom: 5px; left: 50%; transform: translateX(-50%);"></div>
+                                <div class="electron" style="bottom: 15px; left: 5px;"></div>
+                                <div class="electron" style="top: 30px; left: 5px;"></div>
+                            </div>
+                            
+                            <!-- Transfer Arrow -->
+                            <div class="bond-arrow" style="left: 140px; top: 50px;"></div>
+
+                            <span class="mx-3 text-2xl text-gray-600" style="left: 200px; position: absolute;">→</span>
+                        </div>
+                        
+                        <p class="text-xs text-gray-500">Sodium (1 valence electron) gives its electron to Chlorine (7 valence electrons), creating strong attraction.</p>
+                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: Na + Cl ====== NaCl</p>
+                    </div>
+                    
+                    <!-- Fixed Quiz 1 -->
+                    <div id="ionic-quiz-container" class="mt-6 border-t pt-4">
+                        <h4 class="font-semibold mb-2 text-gray-700">Learning Check: Ionic Bonding</h4>
+                        <div id="ionic-quiz-area" class="space-y-3">
+                            <!-- Questions loaded by window.loadFixedQuiz('ionic') -->
+                            <button id="btn-ionic-quiz-start" onclick="window.loadFixedQuiz('ionic')" class="calm-btn w-full py-2 bg-purple-500 text-white font-bold rounded-lg shadow-md hover:bg-purple-600 transition">
+                                Start Quiz (3 Questions)
+                            </button>
+                        </div>
+                        <div id="ionic-feedback" class="mt-3 font-bold text-center"></div>
+                    </div>
+                </div>
+
+                <!-- Concept 2: Covalent Bonding -->
+                <div id="concept-covalent" class="bg-white p-6 rounded-xl shadow-lg">
+                    <h3 class="text-xl font-semibold mb-3 text-emerald-600">2. Covalent Bonding: The Electron Share</h3>
+                    <p class="text-gray-700 mb-4 text-sm">
+                        Covalent bonding occurs when atoms share valence electrons to achieve a stable outer shell. This typically happens between two nonmetal atoms.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 pl-4 mb-4">
+                        <li><span class="concept-term">Nonmetals</span> (like Hydrogen, Oxygen, Carbon) have high valence electron counts (typically 4-7).</li>
+                        <li><span class="concept-term">Sharing:</span> Instead of giving or taking, they overlap their valence shells and share electrons, counting those shared electrons toward both atoms' octets.</li>
+                        <li><span class="concept-term">Stability:</span> Examples: Water (H20) involves Oxygen sharing electrons with two Hydrogen atoms.</li>
+                    </ul>
+                    
+                    <!-- Diagram -->
+                    <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 mt-4 text-center">
+                        <p class="font-bold text-sm text-gray-700 mb-2">Example: Water (H2O) Covalent Bonding</p>
+                        
+                        <!-- CUSTOM CSS DIAGRAM: COVALENT BONDING (H2O) -->
+                        <div class="diagram-container">
+                            <!-- Hydrogen 1 (H) -->
+                            <div class="atom bg-red-100 text-red-700 border border-red-300" style="position: absolute; left: 50px; top: 60px; width: 40px; height: 40px;">H
+                                <div class="electron" style="top: 10px; right: 10px;"></div>
+                            </div>
+                            
+                            <!-- Oxygen (O) - Center -->
+                            <div class="atom bg-purple-100 text-purple-700 border border-purple-300" style="position: absolute; left: 125px; top: 30px; width: 60px; height: 60px;">O
+                                <!-- Shared pair 1 -->
+                                <div class="electron" style="top: 20px; left: 5px;"></div>
+                                <div class="electron" style="top: 20px; left: 15px;"></div>
+                                
+                                <!-- Shared pair 2 (for other H) -->
+                                <div class="electron" style="top: 5px; right: 20px;"></div>
+                                <div class="electron" style="top: 15px; right: 20px;"></div>
+                                
+                                <!-- Lone Pair -->
+                                <div class="electron" style="bottom: 5px; left: 5px;"></div>
+                                <div class="electron" style="bottom: 5px; left: 15px;"></div>
+                            </div>
+                            
+                            <!-- Hydrogen 2 (H) -->
+                            <div class="atom bg-red-100 text-red-700 border border-red-300" style="position: absolute; left: 210px; top: 60px; width: 40px; height: 40px;">H
+                                <div class="electron" style="top: 10px; left: 10px;"></div>
+                            </div>
+                            
+                            <span class="text-xs text-gray-500" style="position: absolute; left: 120px; top: 120px;">(Simplified V-Shape structure)</span>
+                        </div>
+
+                        <p class="text-xs text-gray-500">Oxygen (6 valence electrons) shares electrons with two Hydrogens (1 valence electron each) to achieve stability.</p>
+                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: 2H + O ======= H2O</p>
+                    </div>
+
+                    <!-- Fixed Quiz 2 -->
+                    <div id="covalent-quiz-container" class="mt-6 border-t pt-4">
+                        <h4 class="font-semibold mb-2 text-gray-700">Learning Check: Covalent Bonding</h4>
+                        <div id="covalent-quiz-area" class="space-y-3">
+                            <!-- Questions loaded by window.loadFixedQuiz('covalent') -->
+                            <button id="btn-covalent-quiz-start" onclick="window.loadFixedQuiz('covalent')" class="calm-btn w-full py-2 bg-emerald-500 text-white font-bold rounded-lg shadow-md hover:bg-emerald-600 transition">
+                                Start Quiz (3 Questions)
+                            </button>
+                        </div>
+                        <div id="covalent-feedback" class="mt-3 font-bold text-center"></div>
+                        <!-- Goal: Unlock Molecule Garden -->
+                        <div id="covalent-unlock-message" class="mt-4 p-3 bg-yellow-100 rounded-lg text-center font-medium text-yellow-800 hidden">
+                            Complete this quiz to unlock Molecule Garden!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- --- VIEW: MOLECULE GARDEN --- -->
+        <section id="view-molecule" class="view hidden" style="background-color: var(--color-bg-lab);">
+            <header class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-700">🌿 Molecule Garden Lab</h2>
+                <p class="text-gray-500 mt-1">Combine atoms to discover stable molecules. Your discoveries are saved in the garden below.</p>
+            </header>
+
+            <!-- Atom Palette -->
+            <div class="bg-white p-6 rounded-xl shadow-lg mb-8">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700 border-b pb-2">Atom Palette</h3>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <!-- Hydrogen -->
+                    <div class="atom-drag-source p-3 rounded-xl bg-gray-50 shadow-md text-center" draggable="true" onclick="window.addAtom('H')" data-atom="H" ondragstart="window.handleDragStart(event, 'H')">
+                        <span class="text-4xl text-gray-400">⚪</span>
+                        <p class="font-medium text-sm mt-1 text-gray-700">H (Valency 1)</p>
+                    </div>
+                    <!-- Oxygen -->
+                    <div class="atom-drag-source p-3 rounded-xl bg-red-50 shadow-md text-center" draggable="true" onclick="window.addAtom('O')" data-atom="O" ondragstart="window.handleDragStart(event, 'O')">
+                        <span class="text-4xl text-red-500">🔴</span>
+                        <p class="font-medium text-sm mt-1 text-gray-700">O (Valency 2)</p>
+                    </div>
+                    <!-- Carbon -->
+                    <div class="atom-drag-source p-3 rounded-xl bg-green-50 shadow-md text-center" draggable="true" onclick="window.addAtom('C')" data-atom="C" ondragstart="window.handleDragStart(event, 'C')">
+                        <span class="text-4xl text-green-500">🟢</span>
+                        <p class="font-medium text-sm mt-1 text-gray-700">C (Valency 4)</p>
+                    </div>
+                    <!-- Nitrogen -->
+                    <div class="atom-drag-source p-3 rounded-xl bg-blue-50 shadow-md text-center" draggable="true" onclick="window.addAtom('N')" data-atom="N" ondragstart="window.handleDragStart(event, 'N')">
+                        <span class="text-4xl text-blue-500">🔵</span>
+                        <p class="font-medium text-sm mt-1 text-gray-700">N (Valency 3)</p>
+                    </div>
+                </div>
+            </div>
