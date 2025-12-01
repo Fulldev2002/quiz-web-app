@@ -310,7 +310,7 @@
                         </div>
                         
                         <p class="text-xs text-gray-500">Sodium (1 valence electron) gives its electron to Chlorine (7 valence electrons), creating strong attraction.</p>
-                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: Na + Cl ====== NaCl</p>
+                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: Na + Cl ===== NaCl</p>
                     </div>
                     
                     <!-- Fixed Quiz 1 -->
@@ -335,7 +335,7 @@
                     <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 pl-4 mb-4">
                         <li><span class="concept-term">Nonmetals</span> (like Hydrogen, Oxygen, Carbon) have high valence electron counts (typically 4-7).</li>
                         <li><span class="concept-term">Sharing:</span> Instead of giving or taking, they overlap their valence shells and share electrons, counting those shared electrons toward both atoms' octets.</li>
-                        <li><span class="concept-term">Stability:</span> Examples: Water (H20) involves Oxygen sharing electrons with two Hydrogen atoms.</li>
+                        <li><span class="concept-term">Stability:</span> Examples: Water ($\text{H}_2\text{O}$) involves Oxygen sharing electrons with two Hydrogen atoms.</li>
                     </ul>
                     
                     <!-- Diagram -->
@@ -373,7 +373,7 @@
                         </div>
 
                         <p class="text-xs text-gray-500">Oxygen (6 valence electrons) shares electrons with two Hydrogens (1 valence electron each) to achieve stability.</p>
-                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: 2H + O ======= H2O</p>
+                        <p class="font-semibold text-sm text-gray-700 mt-2">Equation: 2H + O ======= H20</p>
                     </div>
 
                     <!-- Fixed Quiz 2 -->
@@ -464,7 +464,7 @@
         <section id="view-forces" class="view hidden" style="background-color: var(--color-bg-lab);">
             <header class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-700">🔬 Forces & Motion: Puzzle Lab</h2>
-                <p class="text-gray-500 mt-1">Drag the *red handle* to change the ramp's angle (Max 23.2°). The gray block will slide from the top.</p>
+                <p class="text-gray-500 mt-1">Drag the **red handle** to change the ramp's angle (Max 23.2°). The gray block will slide from the top.</p>
             </header>
 
             <!-- Simulation Controls -->
@@ -473,7 +473,7 @@
                 
                 <div class="text-center">
                     <button onclick="window.runSimulation()" class="control-button px-8 py-3 bg-[var(--color-primary-soft)] text-white font-bold rounded-lg shadow-md hover:bg-emerald-600 transition duration-300">
-                        ▶ OBSERVE MOTION
+                        ▶️ OBSERVE MOTION
                     </button>
                 </div>
             </div>
@@ -530,7 +530,7 @@
         let quizState = { active: false, currentQuizType: null, questions: [], score: 0, currentQuestionIndex: 0 };
         
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof _firebase_config !== 'undefined' ? JSON.parse(_firebase_config) : null;
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
         
         setLogLevel('Debug'); // Enable Firebase debug logging
@@ -603,7 +603,7 @@
             onAuthStateChanged(auth, (user) => {
                 if (user) {
                     userId = user.uid;
-                    document.getElementById('user-status').textContent = User ID: ${userId.substring(0, 8)}...;
+                    document.getElementById('user-status').textContent = `User ID: ${userId.substring(0, 8)}...`;
                     exposedUpdateMoleculeGardenButton();
                 } else {
                     document.getElementById('user-status').textContent = 'Signed Out';
@@ -634,7 +634,7 @@
             const views = document.querySelectorAll('.view');
             views.forEach(view => view.classList.add('hidden'));
             
-            const targetView = document.getElementById(view-${viewName});
+            const targetView = document.getElementById(`view-${viewName}`);
             if (targetView) {
                 targetView.classList.remove('hidden');
             }
@@ -927,12 +927,12 @@
                 valencyUsed += atomInfo.valency * count;
 
                 const atomElement = document.createElement('div');
-                atomElement.className = ${atomInfo.color} text-4xl font-bold inline-block p-2;
-                atomElement.textContent = ${atomInfo.emoji} x${count};
+                atomElement.className = `${atomInfo.color} text-4xl font-bold inline-block p-2`;
+                atomElement.textContent = `${atomInfo.emoji} x${count}`;
                 container.appendChild(atomElement);
             }
 
-            document.getElementById('valency-status').textContent = Total Valency: ${valencyUsed} (Must be even and balanced);
+            document.getElementById('valency-status').textContent = `Total Valency: ${valencyUsed} (Must be even and balanced)`;
             checkMolecule();
         }
 
@@ -980,11 +980,11 @@
         function handleDiscovery(recipe) {
             if (!discoveredMolecules.some(m => m.name === recipe.name)) {
                 discoveredMolecules.push(recipe);
-                document.getElementById('result-text').textContent = ${recipe.result} Success! You discovered ${recipe.name}! ${recipe.result};
+                document.getElementById('result-text').textContent = `${recipe.result} Success! You discovered ${recipe.name}! ${recipe.result}`;
                 document.getElementById('result-text').className = 'text-emerald-600 font-bold text-xl animate-pulse';
                 saveMoleculeGarden(discoveredMolecules);
             } else {
-                document.getElementById('result-text').textContent = ${recipe.name} already in your garden. Reset to try another!;
+                document.getElementById('result-text').textContent = `${recipe.name} already in your garden. Reset to try another!`;
                 document.getElementById('result-text').className = 'text-gray-600 font-medium';
             }
         }
@@ -1000,7 +1000,7 @@
                 molecules.forEach(mol => {
                     const card = document.createElement('div');
                     card.className = 'p-3 bg-white border border-gray-100 rounded-lg shadow-sm';
-                    card.innerHTML = <span class="text-3xl">${mol.result}</span> <span class="font-semibold text-gray-700">${mol.name}</span>;
+                    card.innerHTML = `<span class="text-3xl">${mol.result}</span> <span class="font-semibold text-gray-700">${mol.name}</span>`;
                     garden.appendChild(card);
                 });
             }
@@ -1065,7 +1065,7 @@
             rampHandle.setAttribute('cy', clampedY);
             
             // Points: (START_X, clampedY), (END_X, BASE_Y), (START_X, BASE_Y)
-            ramp.setAttribute('points', ${START_X},${clampedY} ${END_X},${BASE_Y} ${START_X},${BASE_Y});
+            ramp.setAttribute('points', `${START_X},${clampedY} ${END_X},${BASE_Y} ${START_X},${BASE_Y}`);
 
             // Calculate the angle based on the new height
             const height = BASE_Y - clampedY;
@@ -1094,7 +1094,7 @@
             const blockCenterY = clampedY; 
 
             // Rotate the block to match the ramp angle
-            const targetTransform = translate(0 0) rotate(-${currentAngle}, ${blockCenterX}, ${blockCenterY});
+            const targetTransform = `translate(0 0) rotate(-${currentAngle}, ${blockCenterX}, ${blockCenterY})`;
             
             // Reset transition for snap-to-position
             block.style.transition = 'none';
@@ -1172,9 +1172,9 @@
 
             // The translation applied needs to move the block from (startX, startY) to (finalX, finalY)
             // It must also reset the rotation to 0 to make it look like it lands flat
-            const finalTransform = translate(${dx} ${dy}) rotate(0, ${finalX + 15}, ${finalY + 15});
+            const finalTransform = `translate(${dx} ${dy}) rotate(0, ${finalX + 15}, ${finalY + 15})`;
             
-            block.style.transitionDuration = ${clampedDuration.toFixed(2)}s;
+            block.style.transitionDuration = `${clampedDuration.toFixed(2)}s`;
             block.style.transitionTimingFunction = 'ease-in'; // Simulate gravity
             block.setAttribute('transform', finalTransform);
 
@@ -1184,13 +1184,13 @@
                 let message;
                 let color;
                 if (currentAngle < 7) {
-                    message = Low Angle (${currentAngle.toFixed(1)}°): Slow slide. Duration: ${clampedDuration.toFixed(1)}s.;
+                    message = `Low Angle (${currentAngle.toFixed(1)}°): Slow slide. Duration: ${clampedDuration.toFixed(1)}s.`;
                     color = "#F59E0B";
                 } else if (currentAngle < 18) {
-                    message = Moderate Angle (${currentAngle.toFixed(1)}°): Clear acceleration. Duration: ${clampedDuration.toFixed(1)}s.;
+                    message = `Moderate Angle (${currentAngle.toFixed(1)}°): Clear acceleration. Duration: ${clampedDuration.toFixed(1)}s.`;
                     color = "#10B981";
                 } else {
-                    message = High Angle (${currentAngle.toFixed(1)}°): Fastest slide. Duration: ${clampedDuration.toFixed(1)}s.;
+                    message = `High Angle (${currentAngle.toFixed(1)}°): Fastest slide. Duration: ${clampedDuration.toFixed(1)}s.`;
                     color = "#EF4444";
                 }
 
@@ -1227,7 +1227,7 @@
             quizState.currentQuestionIndex = 0;
             quizRunning = true;
 
-            const targetButton = document.getElementById(btn-${quizType}-quiz-start);
+            const targetButton = document.getElementById(`btn-${quizType}-quiz-start`);
             if (targetButton) {
                  targetButton.style.display = 'none';
             }
@@ -1236,7 +1236,7 @@
         }
 
         function startQuiz() {
-            const quizAreaId = ${quizState.currentQuizType}-quiz-area;
+            const quizAreaId = `${quizState.currentQuizType}-quiz-area`;
             document.getElementById(quizAreaId).innerHTML = '';
             showNextQuestion();
         }
@@ -1244,7 +1244,7 @@
         function showNextQuestion() {
             const questionIndex = quizState.currentQuestionIndex;
             const questionData = quizState.questions[questionIndex];
-            const quizAreaId = ${quizState.currentQuizType}-quiz-area;
+            const quizAreaId = `${quizState.currentQuizType}-quiz-area`;
             const targetArea = document.getElementById(quizAreaId);
             
             if (!questionData) {
@@ -1254,9 +1254,9 @@
             // Shuffle options for better quiz experience
             const shuffledOptions = questionData.options.sort(() => Math.random() - 0.5);
 
-            let html = <h5 class="text-md font-bold mb-3">Question ${questionIndex + 1}/${quizState.questions.length}:</h5>;
-            html += <p class="mb-4 text-gray-700">${questionData.question}</p>;
-            html += <div class="space-y-2">;
+            let html = `<h5 class="text-md font-bold mb-3">Question ${questionIndex + 1}/${quizState.questions.length}:</h5>`;
+            html += `<p class="mb-4 text-gray-700">${questionData.question}</p>`;
+            html += `<div class="space-y-2">`;
             
             shuffledOptions.forEach((option, index) => {
                 // Ensure options are properly escaped for use in data-attribute and function call
@@ -1268,7 +1268,7 @@
                         </button>`;
             });
 
-            html += </div>;
+            html += `</div>`;
             targetArea.innerHTML = html;
         }
 
@@ -1277,8 +1277,104 @@
             
             const questionData = quizState.questions[quizState.currentQuestionIndex];
             const isCorrect = selectedOption === questionData.correctAnswer;
-            const optionButtons = document.querySelectorAll(#${quizState.currentQuizType}-quiz-area .quiz-option);
-            const feedbackElement = document.getElementById(${quizState.currentQuizType}-feedback);
+            const optionButtons = document.querySelectorAll(`#${quizState.currentQuizType}-quiz-area .quiz-option`);
+            const feedbackElement = document.getElementById(`${quizState.currentQuizType}-feedback`);
             
             // Find the correct option and the selected option by their data-option attribute
             optionButtons.forEach(btn => {
+                btn.disabled = true;
+                const btnOption = btn.getAttribute('data-option');
+                if (btnOption === questionData.correctAnswer) {
+                    btn.classList.add('bg-emerald-200', 'font-bold');
+                } else if (btnOption === selectedOption) {
+                    btn.classList.add('bg-red-200', 'line-through');
+                }
+            });
+
+            if (isCorrect) {
+                quizState.score++;
+                feedbackElement.textContent = `Correct! (${quizState.score}/${quizState.currentQuestionIndex + 1})`;
+                feedbackElement.classList.remove('text-red-500');
+                feedbackElement.classList.add('text-emerald-600');
+            } else {
+                feedbackElement.textContent = `Incorrect. The correct answer is: ${questionData.correctAnswer}`;
+                feedbackElement.classList.remove('text-emerald-600');
+                feedbackElement.classList.add('text-red-500');
+            }
+
+            // Move to next question after a brief delay
+            setTimeout(() => {
+                quizState.currentQuestionIndex++;
+                showNextQuestion();
+            }, 1500);
+        }
+
+        function endQuiz() {
+            const quizType = quizState.currentQuizType;
+            const targetArea = document.getElementById(`${quizType}-quiz-area`);
+            const targetButtonStart = document.getElementById(`btn-${quizType}-quiz-start`);
+            const feedbackElement = document.getElementById(`${quizType}-feedback`);
+            
+            const score = quizState.score;
+            const total = quizState.questions.length;
+            const scorePercentage = (score / total) * 100;
+
+            if (targetButtonStart) {
+                targetButtonStart.textContent = 'Start New Quiz';
+                targetButtonStart.style.display = 'block'; // Show button again
+            }
+            quizRunning = false;
+            quizState.active = false;
+            
+            if (targetArea) {
+                targetArea.innerHTML = `<h5 class="text-xl font-bold text-center mb-3">Quiz Complete!</h5>
+                                        <p class="text-center text-2xl font-extrabold text-indigo-600">${score}/${total}</p>
+                                        <p class="text-center text-sm text-gray-600">Score: ${scorePercentage.toFixed(0)}%</p>`;
+            }
+            
+            if (feedbackElement) {
+                feedbackElement.textContent = ''; // Clear temporary feedback
+            }
+
+            // --- UNLOCK LOGIC ---
+            if (quizType === 'covalent' && scorePercentage >= 66) { // Unlock on 2/3 correct
+                localStorage.setItem(MOLECULE_GARDEN_UNLOCKED, 'true');
+                showModal("Success! You've mastered Covalent Bonding. Molecule Garden is now unlocked on the homepage!");
+                exposedUpdateMoleculeGardenButton();
+                document.getElementById('covalent-unlock-message').classList.add('hidden');
+            } else if (quizType === 'covalent') {
+                const unlockMessage = document.getElementById('covalent-unlock-message');
+                if (unlockMessage) {
+                    unlockMessage.classList.remove('hidden');
+                    unlockMessage.textContent = 'Score at least 66% to unlock Molecule Garden!';
+                }
+            }
+        }
+
+
+        // --- GLOBAL EXPOSURE (Ensure inline HTML calls work) ---
+        // Functions called directly in HTML need to be defined here or exposed.
+        window.setView = setView;
+        window.toggleAccessibility = toggleAccessibility;
+        window.applyAccessibility = applyAccessibility;
+        window.showModal = showModal;
+        window.hideModal = hideModal;
+        window.initThree = initThree;
+        window.animate = animate;
+        window.addAtom = addAtom;
+        window.resetMolecule = resetMolecule;
+        window.checkAnswer = checkAnswer;
+        window.loadFixedQuiz = loadFixedQuiz;
+        window.startQuiz = startQuiz;
+        window.runSimulation = runSimulation;
+        window.handleRampDragStart = handleRampDragStart;
+        
+        
+        // Final, most robust initializer
+        window.onload = function() {
+            setupApp();
+        };
+
+    </script>
+</body>
+</html>
